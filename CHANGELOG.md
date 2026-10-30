@@ -5,7 +5,7 @@ follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions
 follow [Semantic Versioning](https://semver.org/). This file is generated at
 each release from the Conventional Commits: do not edit it by hand.
 
-## [0.1.0] - unreleased
+## [0.1.0] - 2026-10-30
 
 ### Added
 
@@ -14,3 +14,5 @@ each release from the Conventional Commits: do not edit it by hand.
 - **widgets:** the air quality now (AQI, CO₂, PM2.5, TVOC, temperature, advice) with a Refresh button, and the hourly averages of one measure over the last 24 hours
 - **configuration:** API key with a guide, device ids, CO₂ and TVOC reference values, language, "Read now" and "Diagnostic" buttons; one request a minute reads every device
 - **i18n:** English, French, German and Spanish for the manifest, the runtime texts, the documentation and the README
+
+[0.1.0]: https://github.com/William-De71/gladys-kaiterra/releases/tag/v0.1.0
