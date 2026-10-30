@@ -1,0 +1,13 @@
+{
+  "id": "00000000-0031-0101-0000-00007e57c0de",
+  "name": "",
+  "model": "SE-100",
+  "firmware_version": "1.10.0",
+  "handshake": {
+    "sbay102.slifetime": 0.0812,
+    "sbay102.stype": "KM-102",
+    "sbay103.slifetime": 0.71,
+    "sbay103.stype": "KM-100",
+    "ts": "2022-07-25T02:47:59Z"
+  }
+}

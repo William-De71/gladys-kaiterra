@@ -1,0 +1,1476 @@
+{
+  "manifest_version": 1,
+  "type": "device",
+  "name": "Kaiterra",
+  "description": {
+    "en": "Kaiterra Sensedge and Laser Egg indoor air: AQI, PM2.5, CO₂, TVOC, temperature and humidity.",
+    "fr": "Air intérieur Kaiterra Sensedge et Laser Egg : AQI, PM2,5, CO₂, COVT, température et humidité.",
+    "de": "Raumluft von Kaiterra Sensedge und Laser Egg: AQI, PM2,5, CO₂, TVOC, Temperatur und Feuchte.",
+    "es": "Aire interior de Kaiterra Sensedge y Laser Egg: AQI, PM2,5, CO₂, COVT, temperatura y humedad."
+  },
+  "version": "0.1.0",
+  "docker_image": "ghcr.io/william-de71/gladys-kaiterra:0.1.0",
+  "gladys_version": ">=5.3.0",
+  "categories": ["environment", "climate"],
+  "keywords": [
+    "CO2 monitor",
+    "Sensedge",
+    "Sensedge Mini",
+    "Laser Egg",
+    "indoor air quality",
+    "qualité de l'air intérieur",
+    "Raumluftqualität",
+    "CO2",
+    "TVOC",
+    "PM2.5"
+  ],
+  "cover_image": "https://raw.githubusercontent.com/William-De71/gladys-kaiterra/main/cover.jpg",
+  "transports": ["cloud"],
+  "config_schema": [
+    {
+      "key": "intro",
+      "type": "section",
+      "label": {
+        "en": "Kaiterra API key",
+        "fr": "Clé d’API Kaiterra",
+        "de": "Kaiterra-API-Schlüssel",
+        "es": "Clave de API de Kaiterra"
+      },
+      "description": {
+        "en": "The integration reads your Kaiterra devices through the official Kaiterra API. Sign in at app.kaiterra.com with the account of your devices, open Account Settings, then API Keys, and click Generate API Key. Copy the key here.",
+        "fr": "L’intégration lit vos appareils Kaiterra par l’API officielle de Kaiterra. Connectez-vous sur app.kaiterra.com avec le compte de vos appareils, ouvrez les paramètres du compte (Account Settings), puis API Keys, et cliquez sur Generate API Key. Copiez la clé ici.",
+        "de": "Die Integration liest deine Kaiterra-Geräte über die offizielle Kaiterra-API. Melde dich auf app.kaiterra.com mit dem Konto deiner Geräte an, öffne die Kontoeinstellungen (Account Settings), dann API Keys, und klick auf Generate API Key. Kopier den Schlüssel hierher.",
+        "es": "La integración lee sus dispositivos Kaiterra a través de la API oficial de Kaiterra. Inicie sesión en app.kaiterra.com con la cuenta de sus dispositivos, abra los ajustes de la cuenta (Account Settings), luego API Keys, y haga clic en Generate API Key. Copie la clave aquí."
+      },
+      "links": [
+        {
+          "url": "https://app.kaiterra.com",
+          "label": {
+            "en": "Kaiterra dashboard",
+            "fr": "Tableau de bord Kaiterra",
+            "de": "Kaiterra-Dashboard",
+            "es": "Panel de Kaiterra"
+          }
+        },
+        {
+          "url": "https://dev.kaiterra.com",
+          "label": {
+            "en": "Kaiterra API documentation",
+            "fr": "Documentation de l’API Kaiterra",
+            "de": "Dokumentation der Kaiterra-API",
+            "es": "Documentación de la API de Kaiterra"
+          }
+        }
+      ]
+    },
+    {
+      "key": "api_key",
+      "type": "secret",
+      "required": true,
+      "label": {
+        "en": "API key",
+        "fr": "Clé d’API",
+        "de": "API-Schlüssel",
+        "es": "Clave de API"
+      }
+    },
+    {
+      "key": "devices_section",
+      "type": "section",
+      "label": {
+        "en": "Devices",
+        "fr": "Appareils",
+        "de": "Geräte",
+        "es": "Dispositivos"
+      },
+      "description": {
+        "en": "The API cannot list your devices: give the Unique Device ID (UDID) of each one. The Kaiterra app shows it in the settings of the device, a Sensedge in its own settings. Up to 20 devices, separated by commas or new lines.",
+        "fr": "L’API ne sait pas lister vos appareils : donnez l’identifiant unique (UDID) de chacun. L’appli Kaiterra l’affiche dans les réglages de l’appareil, un Sensedge dans ses propres réglages. Jusqu’à 20 appareils, séparés par des virgules ou des retours à la ligne.",
+        "de": "Die API kann deine Geräte nicht auflisten: Gib die eindeutige Geräte-ID (UDID) jedes Geräts an. Die Kaiterra-App zeigt sie in den Einstellungen des Geräts, ein Sensedge in seinen eigenen Einstellungen. Bis zu 20 Geräte, getrennt durch Kommas oder Zeilenumbrüche.",
+        "es": "La API no puede listar sus dispositivos: indique el identificador único (UDID) de cada uno. La app Kaiterra lo muestra en los ajustes del dispositivo, un Sensedge en sus propios ajustes. Hasta 20 dispositivos, separados por comas o saltos de línea."
+      }
+    },
+    {
+      "key": "devices",
+      "type": "string",
+      "required": true,
+      "label": {
+        "en": "Device ids (UDID)",
+        "fr": "Identifiants des appareils (UDID)",
+        "de": "Geräte-IDs (UDID)",
+        "es": "Identificadores de los dispositivos (UDID)"
+      },
+      "placeholder": {
+        "en": "46048117-86a7-488e-9c58-708f3470ee11",
+        "fr": "46048117-86a7-488e-9c58-708f3470ee11",
+        "de": "46048117-86a7-488e-9c58-708f3470ee11",
+        "es": "46048117-86a7-488e-9c58-708f3470ee11"
+      }
+    },
+    {
+      "key": "options",
+      "type": "section",
+      "label": {
+        "en": "Reference values",
+        "fr": "Valeurs de référence",
+        "de": "Richtwerte",
+        "es": "Valores de referencia"
+      },
+      "description": {
+        "en": "The scene triggers and the widget colors compare each value to a reference: the WHO guidelines for the particles, NO₂, ozone and CO, and the values below for CO₂ and TVOC, which have none.",
+        "fr": "Les déclencheurs de scène et les couleurs du widget comparent chaque valeur à une référence : les valeurs guides de l’OMS pour les particules, le NO₂, l’ozone et le CO, et les valeurs ci-dessous pour le CO₂ et les COVT, qui n’en ont pas.",
+        "de": "Die Szenenauslöser und die Farben des Widgets vergleichen jeden Wert mit einem Richtwert: den WHO-Leitlinien für Partikel, NO₂, Ozon und CO, und den Werten unten für CO₂ und TVOC, für die es keine gibt.",
+        "es": "Los desencadenantes de escena y los colores del widget comparan cada valor con una referencia: las guías de la OMS para las partículas, el NO₂, el ozono y el CO, y los valores de abajo para el CO₂ y los COVT, que no tienen."
+      }
+    },
+    {
+      "key": "co2_limit",
+      "type": "number",
+      "default": 1000,
+      "min": 400,
+      "max": 5000,
+      "label": {
+        "en": "CO₂ reference (ppm)",
+        "fr": "Référence CO₂ (ppm)",
+        "de": "CO₂-Richtwert (ppm)",
+        "es": "Referencia de CO₂ (ppm)"
+      },
+      "description": {
+        "en": "1,000 ppm by default: past it, the room needs fresh air.",
+        "fr": "1 000 ppm par défaut : au-delà, la pièce a besoin d’air frais.",
+        "de": "Standard 1.000 ppm: darüber braucht der Raum frische Luft.",
+        "es": "1000 ppm por defecto: por encima, la habitación necesita aire fresco."
+      }
+    },
+    {
+      "key": "tvoc_limit",
+      "type": "number",
+      "default": 500,
+      "min": 50,
+      "max": 10000,
+      "label": {
+        "en": "TVOC reference (ppb)",
+        "fr": "Référence COVT (ppb)",
+        "de": "TVOC-Richtwert (ppb)",
+        "es": "Referencia de COVT (ppb)"
+      },
+      "description": {
+        "en": "500 ppb by default.",
+        "fr": "500 ppb par défaut.",
+        "de": "Standard 500 ppb.",
+        "es": "500 ppb por defecto."
+      }
+    },
+    {
+      "key": "language",
+      "type": "select",
+      "default": "auto",
+      "label": {
+        "en": "Language of the texts",
+        "fr": "Langue des textes",
+        "de": "Sprache der Texte",
+        "es": "Idioma de los textos"
+      },
+      "description": {
+        "en": "Names of the devices and texts of the scenes. Automatic: the language of the dashboard.",
+        "fr": "Noms des appareils et textes des scènes. Automatique : la langue du tableau de bord.",
+        "de": "Namen der Geräte und Texte der Szenen. Automatisch: die Sprache des Dashboards.",
+        "es": "Nombres de los dispositivos y textos de las escenas. Automático: el idioma del panel."
+      },
+      "options": [
+        {
+          "value": "auto",
+          "label": {
+            "en": "Automatic",
+            "fr": "Automatique",
+            "de": "Automatisch",
+            "es": "Automático"
+          }
+        },
+        {
+          "value": "en",
+          "label": {
+            "en": "English",
+            "fr": "English",
+            "de": "English",
+            "es": "English"
+          }
+        },
+        {
+          "value": "fr",
+          "label": {
+            "en": "Français",
+            "fr": "Français",
+            "de": "Français",
+            "es": "Français"
+          }
+        },
+        {
+          "value": "de",
+          "label": {
+            "en": "Deutsch",
+            "fr": "Deutsch",
+            "de": "Deutsch",
+            "es": "Deutsch"
+          }
+        },
+        {
+          "value": "es",
+          "label": {
+            "en": "Español",
+            "fr": "Español",
+            "de": "Español",
+            "es": "Español"
+          }
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "key": "read_now",
+      "timeout_seconds": 60,
+      "label": {
+        "en": "Read now",
+        "fr": "Lire maintenant",
+        "de": "Jetzt lesen",
+        "es": "Leer ahora"
+      },
+      "description": {
+        "en": "Checks the key and reads every device now, with its name and sensor modules.",
+        "fr": "Vérifie la clé et lit tout de suite chaque appareil, avec son nom et ses modules de capteurs.",
+        "de": "Prüft den Schlüssel und liest sofort jedes Gerät, mit seinem Namen und seinen Sensormodulen.",
+        "es": "Comprueba la clave y lee ahora cada dispositivo, con su nombre y sus módulos de sensores."
+      }
+    },
+    {
+      "key": "diagnostic",
+      "label": {
+        "en": "Diagnostic",
+        "fr": "Diagnostic",
+        "de": "Diagnose",
+        "es": "Diagnóstico"
+      },
+      "description": {
+        "en": "Writes the state of the integration to its logs, without the key nor the device ids.",
+        "fr": "Écrit l’état de l’intégration dans ses journaux, sans la clé ni les identifiants des appareils.",
+        "de": "Schreibt den Zustand der Integration in ihre Logs, ohne den Schlüssel und die Geräte-IDs.",
+        "es": "Escribe el estado de la integración en sus registros, sin la clave ni los identificadores de los dispositivos."
+      }
+    }
+  ],
+  "widgets": [
+    {
+      "key": "air_quality",
+      "icon": "wind",
+      "action_timeout_seconds": 30,
+      "label": {
+        "en": "Kaiterra air quality",
+        "fr": "Qualité de l’air Kaiterra",
+        "de": "Kaiterra-Luftqualität",
+        "es": "Calidad del aire Kaiterra"
+      },
+      "description": {
+        "en": "The AQI now, CO₂, PM2.5, TVOC and the temperature, with an advice.",
+        "fr": "L’AQI actuel, CO₂, PM2,5, COVT et la température, avec un conseil.",
+        "de": "Der aktuelle AQI, CO₂, PM2,5, TVOC und die Temperatur, mit einem Rat.",
+        "es": "El AQI actual, CO₂, PM2,5, COVT y la temperatura, con un consejo."
+      },
+      "settings": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "Device",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Dispositivo"
+          },
+          "description": {
+            "en": "A Kaiterra device. Leave empty for the first one.",
+            "fr": "Un appareil Kaiterra. Laissez vide pour le premier.",
+            "de": "Ein Kaiterra-Gerät. Leer lassen für das erste.",
+            "es": "Un dispositivo Kaiterra. Déjelo vacío para el primero."
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "key": "history",
+      "icon": "trending-up",
+      "label": {
+        "en": "Kaiterra over 24 h",
+        "fr": "Kaiterra sur 24 h",
+        "de": "Kaiterra über 24 Std.",
+        "es": "Kaiterra en 24 h"
+      },
+      "description": {
+        "en": "One measure over the last 24 hours, hourly averages.",
+        "fr": "Une mesure sur les dernières 24 heures, en moyennes horaires.",
+        "de": "Ein Messwert über die letzten 24 Stunden, als Stundenmittel.",
+        "es": "Una medida en las últimas 24 horas, en promedios horarios."
+      },
+      "settings": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "Device",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Dispositivo"
+          },
+          "description": {
+            "en": "A Kaiterra device. Leave empty for the first one.",
+            "fr": "Un appareil Kaiterra. Laissez vide pour le premier.",
+            "de": "Ein Kaiterra-Gerät. Leer lassen für das erste.",
+            "es": "Un dispositivo Kaiterra. Déjelo vacío para el primero."
+          },
+          "required": false
+        },
+        {
+          "key": "measure",
+          "type": "select",
+          "default": "co2",
+          "label": {
+            "en": "Measure",
+            "fr": "Mesure",
+            "de": "Messwert",
+            "es": "Medida"
+          },
+          "options": [
+            {
+              "value": "co2",
+              "label": {
+                "en": "CO₂",
+                "fr": "CO₂",
+                "de": "CO₂",
+                "es": "CO₂"
+              }
+            },
+            {
+              "value": "aqi",
+              "label": {
+                "en": "AQI",
+                "fr": "AQI",
+                "de": "AQI",
+                "es": "AQI"
+              }
+            },
+            {
+              "value": "pm25",
+              "label": {
+                "en": "PM2.5",
+                "fr": "PM2,5",
+                "de": "PM2,5",
+                "es": "PM2,5"
+              }
+            },
+            {
+              "value": "pm10",
+              "label": {
+                "en": "PM10",
+                "fr": "PM10",
+                "de": "PM10",
+                "es": "PM10"
+              }
+            },
+            {
+              "value": "tvoc",
+              "label": {
+                "en": "TVOC",
+                "fr": "COVT",
+                "de": "TVOC",
+                "es": "COVT"
+              }
+            },
+            {
+              "value": "temperature",
+              "label": {
+                "en": "Temperature",
+                "fr": "Température",
+                "de": "Temperatur",
+                "es": "Temperatura"
+              }
+            },
+            {
+              "value": "humidity",
+              "label": {
+                "en": "Humidity",
+                "fr": "Humidité",
+                "de": "Luftfeuchtigkeit",
+                "es": "Humedad"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "scene_triggers": [
+    {
+      "key": "air_quality_changed",
+      "label": {
+        "en": "Kaiterra: air quality changed",
+        "fr": "Kaiterra : qualité de l’air changée",
+        "de": "Kaiterra: Luftqualität geändert",
+        "es": "Kaiterra: cambio de calidad del aire"
+      },
+      "description": {
+        "en": "The AQI level of the particles changes (Good → Moderate…) and holds for 5 minutes.",
+        "fr": "Le niveau AQI des particules change (Bonne → Moyenne…) et tient 5 minutes.",
+        "de": "Die AQI-Stufe der Partikel ändert sich (Gut → Mäßig…) und hält 5 Minuten an.",
+        "es": "El nivel AQI de las partículas cambia (Buena → Moderada…) y se mantiene 5 minutos."
+      },
+      "fields": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "Device",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Dispositivo"
+          },
+          "description": {
+            "en": "A Kaiterra device. Leave empty for any device.",
+            "fr": "Un appareil Kaiterra. Laissez vide pour tous les appareils.",
+            "de": "Ein Kaiterra-Gerät. Leer lassen für alle Geräte.",
+            "es": "Un dispositivo Kaiterra. Déjelo vacío para cualquier dispositivo."
+          },
+          "required": false
+        },
+        {
+          "key": "level",
+          "type": "multi_select",
+          "label": {
+            "en": "Level",
+            "fr": "Niveau",
+            "de": "Stufe",
+            "es": "Nivel"
+          },
+          "description": {
+            "en": "The new level. Leave empty for any.",
+            "fr": "Le nouveau niveau. Laissez vide pour tous.",
+            "de": "Die neue Stufe. Leer lassen für jede.",
+            "es": "El nuevo nivel. Déjelo vacío para cualquiera."
+          },
+          "options": [
+            {
+              "value": "good",
+              "label": {
+                "en": "Good",
+                "fr": "Bonne",
+                "de": "Gut",
+                "es": "Buena"
+              }
+            },
+            {
+              "value": "moderate",
+              "label": {
+                "en": "Moderate",
+                "fr": "Moyenne",
+                "de": "Mäßig",
+                "es": "Moderada"
+              }
+            },
+            {
+              "value": "unhealthy_sensitive",
+              "label": {
+                "en": "Unhealthy for sensitive groups",
+                "fr": "Mauvaise pour les personnes sensibles",
+                "de": "Ungesund für empfindliche Gruppen",
+                "es": "Dañina para grupos sensibles"
+              }
+            },
+            {
+              "value": "unhealthy",
+              "label": {
+                "en": "Unhealthy",
+                "fr": "Mauvaise",
+                "de": "Ungesund",
+                "es": "Dañina"
+              }
+            },
+            {
+              "value": "very_unhealthy",
+              "label": {
+                "en": "Very unhealthy",
+                "fr": "Très mauvaise",
+                "de": "Sehr ungesund",
+                "es": "Muy dañina"
+              }
+            },
+            {
+              "value": "hazardous",
+              "label": {
+                "en": "Hazardous",
+                "fr": "Dangereuse",
+                "de": "Gefährlich",
+                "es": "Peligrosa"
+              }
+            }
+          ]
+        },
+        {
+          "key": "direction",
+          "type": "select",
+          "label": {
+            "en": "Direction",
+            "fr": "Sens",
+            "de": "Richtung",
+            "es": "Sentido"
+          },
+          "description": {
+            "en": "Leave empty for both.",
+            "fr": "Laissez vide pour les deux.",
+            "de": "Leer lassen für beide.",
+            "es": "Déjelo vacío para ambos."
+          },
+          "options": [
+            {
+              "value": "worse",
+              "label": {
+                "en": "Worse",
+                "fr": "Dégradation",
+                "de": "Schlechter",
+                "es": "Empeora"
+              }
+            },
+            {
+              "value": "better",
+              "label": {
+                "en": "Better",
+                "fr": "Amélioration",
+                "de": "Besser",
+                "es": "Mejora"
+              }
+            }
+          ]
+        }
+      ],
+      "variables": [
+        {
+          "key": "device",
+          "type": "string",
+          "label": {
+            "en": "Device (id in Gladys)",
+            "fr": "Appareil (id dans Gladys)",
+            "de": "Gerät (ID in Gladys)",
+            "es": "Dispositivo (id en Gladys)"
+          }
+        },
+        {
+          "key": "name",
+          "type": "string",
+          "label": {
+            "en": "Device name",
+            "fr": "Nom de l’appareil",
+            "de": "Name des Geräts",
+            "es": "Nombre del dispositivo"
+          }
+        },
+        {
+          "key": "aqi",
+          "type": "number",
+          "label": {
+            "en": "AQI",
+            "fr": "AQI",
+            "de": "AQI",
+            "es": "AQI"
+          }
+        },
+        {
+          "key": "level",
+          "type": "string",
+          "label": {
+            "en": "Level (key)",
+            "fr": "Niveau (clé)",
+            "de": "Stufe (Schlüssel)",
+            "es": "Nivel (clave)"
+          }
+        },
+        {
+          "key": "level_name",
+          "type": "string",
+          "label": {
+            "en": "Level",
+            "fr": "Niveau",
+            "de": "Stufe",
+            "es": "Nivel"
+          }
+        },
+        {
+          "key": "previous_level",
+          "type": "string",
+          "label": {
+            "en": "Previous level (key)",
+            "fr": "Niveau précédent (clé)",
+            "de": "Vorherige Stufe (Schlüssel)",
+            "es": "Nivel anterior (clave)"
+          }
+        },
+        {
+          "key": "direction",
+          "type": "string",
+          "label": {
+            "en": "Direction (worse, better)",
+            "fr": "Sens (worse, better)",
+            "de": "Richtung (worse, better)",
+            "es": "Sentido (worse, better)"
+          }
+        },
+        {
+          "key": "pm25",
+          "type": "number",
+          "label": {
+            "en": "PM2.5 (µg/m³)",
+            "fr": "PM2,5 (µg/m³)",
+            "de": "PM2,5 (µg/m³)",
+            "es": "PM2,5 (µg/m³)"
+          }
+        },
+        {
+          "key": "pm10",
+          "type": "number",
+          "label": {
+            "en": "PM10 (µg/m³)",
+            "fr": "PM10 (µg/m³)",
+            "de": "PM10 (µg/m³)",
+            "es": "PM10 (µg/m³)"
+          }
+        }
+      ]
+    },
+    {
+      "key": "threshold_exceeded",
+      "label": {
+        "en": "Kaiterra: reference value exceeded",
+        "fr": "Kaiterra : valeur de référence dépassée",
+        "de": "Kaiterra: Richtwert überschritten",
+        "es": "Kaiterra: valor de referencia superado"
+      },
+      "description": {
+        "en": "CO₂, TVOC, particles, NO₂, ozone or CO goes over its reference value for 5 minutes.",
+        "fr": "CO₂, COVT, particules, NO₂, ozone ou CO dépasse sa valeur de référence pendant 5 minutes.",
+        "de": "CO₂, TVOC, Partikel, NO₂, Ozon oder CO liegt 5 Minuten über seinem Richtwert.",
+        "es": "CO₂, COVT, partículas, NO₂, ozono o CO supera su valor de referencia durante 5 minutos."
+      },
+      "fields": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "Device",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Dispositivo"
+          },
+          "description": {
+            "en": "A Kaiterra device. Leave empty for any device.",
+            "fr": "Un appareil Kaiterra. Laissez vide pour tous les appareils.",
+            "de": "Ein Kaiterra-Gerät. Leer lassen für alle Geräte.",
+            "es": "Un dispositivo Kaiterra. Déjelo vacío para cualquier dispositivo."
+          },
+          "required": false
+        },
+        {
+          "key": "pollutant",
+          "type": "multi_select",
+          "label": {
+            "en": "Pollutant",
+            "fr": "Polluant",
+            "de": "Schadstoff",
+            "es": "Contaminante"
+          },
+          "description": {
+            "en": "Leave empty for any.",
+            "fr": "Laissez vide pour tous.",
+            "de": "Leer lassen für jeden.",
+            "es": "Déjelo vacío para cualquiera."
+          },
+          "options": [
+            {
+              "value": "co2",
+              "label": {
+                "en": "CO₂",
+                "fr": "CO₂",
+                "de": "CO₂",
+                "es": "CO₂"
+              }
+            },
+            {
+              "value": "tvoc",
+              "label": {
+                "en": "TVOC",
+                "fr": "COVT",
+                "de": "TVOC",
+                "es": "COVT"
+              }
+            },
+            {
+              "value": "pm25",
+              "label": {
+                "en": "PM2.5",
+                "fr": "PM2,5",
+                "de": "PM2,5",
+                "es": "PM2,5"
+              }
+            },
+            {
+              "value": "pm10",
+              "label": {
+                "en": "PM10",
+                "fr": "PM10",
+                "de": "PM10",
+                "es": "PM10"
+              }
+            },
+            {
+              "value": "no2",
+              "label": {
+                "en": "NO₂",
+                "fr": "NO₂",
+                "de": "NO₂",
+                "es": "NO₂"
+              }
+            },
+            {
+              "value": "o3",
+              "label": {
+                "en": "Ozone",
+                "fr": "Ozone",
+                "de": "Ozon",
+                "es": "Ozono"
+              }
+            },
+            {
+              "value": "co",
+              "label": {
+                "en": "Carbon monoxide",
+                "fr": "Monoxyde de carbone",
+                "de": "Kohlenmonoxid",
+                "es": "Monóxido de carbono"
+              }
+            }
+          ]
+        }
+      ],
+      "variables": [
+        {
+          "key": "device",
+          "type": "string",
+          "label": {
+            "en": "Device (id in Gladys)",
+            "fr": "Appareil (id dans Gladys)",
+            "de": "Gerät (ID in Gladys)",
+            "es": "Dispositivo (id en Gladys)"
+          }
+        },
+        {
+          "key": "name",
+          "type": "string",
+          "label": {
+            "en": "Device name",
+            "fr": "Nom de l’appareil",
+            "de": "Name des Geräts",
+            "es": "Nombre del dispositivo"
+          }
+        },
+        {
+          "key": "pollutant",
+          "type": "string",
+          "label": {
+            "en": "Pollutant (key)",
+            "fr": "Polluant (clé)",
+            "de": "Schadstoff (Schlüssel)",
+            "es": "Contaminante (clave)"
+          }
+        },
+        {
+          "key": "pollutant_name",
+          "type": "string",
+          "label": {
+            "en": "Pollutant",
+            "fr": "Polluant",
+            "de": "Schadstoff",
+            "es": "Contaminante"
+          }
+        },
+        {
+          "key": "value",
+          "type": "number",
+          "label": {
+            "en": "Value",
+            "fr": "Valeur",
+            "de": "Wert",
+            "es": "Valor"
+          }
+        },
+        {
+          "key": "unit",
+          "type": "string",
+          "label": {
+            "en": "Unit",
+            "fr": "Unité",
+            "de": "Einheit",
+            "es": "Unidad"
+          }
+        },
+        {
+          "key": "limit",
+          "type": "number",
+          "label": {
+            "en": "Reference value",
+            "fr": "Valeur de référence",
+            "de": "Richtwert",
+            "es": "Valor de referencia"
+          }
+        },
+        {
+          "key": "percent",
+          "type": "number",
+          "label": {
+            "en": "Percent of the reference",
+            "fr": "Pourcentage de la référence",
+            "de": "Prozent des Richtwerts",
+            "es": "Porcentaje de la referencia"
+          }
+        }
+      ]
+    },
+    {
+      "key": "threshold_cleared",
+      "label": {
+        "en": "Kaiterra: back to normal",
+        "fr": "Kaiterra : retour à la normale",
+        "de": "Kaiterra: wieder normal",
+        "es": "Kaiterra: vuelta a la normalidad"
+      },
+      "description": {
+        "en": "A value that went over its reference stays below 90 % of it for 5 minutes.",
+        "fr": "Une valeur qui avait dépassé sa référence reste sous 90 % de celle-ci pendant 5 minutes.",
+        "de": "Ein Wert über seinem Richtwert bleibt 5 Minuten unter 90 % davon.",
+        "es": "Un valor que superó su referencia se mantiene por debajo del 90 % de ella durante 5 minutos."
+      },
+      "fields": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "Device",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Dispositivo"
+          },
+          "description": {
+            "en": "A Kaiterra device. Leave empty for any device.",
+            "fr": "Un appareil Kaiterra. Laissez vide pour tous les appareils.",
+            "de": "Ein Kaiterra-Gerät. Leer lassen für alle Geräte.",
+            "es": "Un dispositivo Kaiterra. Déjelo vacío para cualquier dispositivo."
+          },
+          "required": false
+        },
+        {
+          "key": "pollutant",
+          "type": "multi_select",
+          "label": {
+            "en": "Pollutant",
+            "fr": "Polluant",
+            "de": "Schadstoff",
+            "es": "Contaminante"
+          },
+          "description": {
+            "en": "Leave empty for any.",
+            "fr": "Laissez vide pour tous.",
+            "de": "Leer lassen für jeden.",
+            "es": "Déjelo vacío para cualquiera."
+          },
+          "options": [
+            {
+              "value": "co2",
+              "label": {
+                "en": "CO₂",
+                "fr": "CO₂",
+                "de": "CO₂",
+                "es": "CO₂"
+              }
+            },
+            {
+              "value": "tvoc",
+              "label": {
+                "en": "TVOC",
+                "fr": "COVT",
+                "de": "TVOC",
+                "es": "COVT"
+              }
+            },
+            {
+              "value": "pm25",
+              "label": {
+                "en": "PM2.5",
+                "fr": "PM2,5",
+                "de": "PM2,5",
+                "es": "PM2,5"
+              }
+            },
+            {
+              "value": "pm10",
+              "label": {
+                "en": "PM10",
+                "fr": "PM10",
+                "de": "PM10",
+                "es": "PM10"
+              }
+            },
+            {
+              "value": "no2",
+              "label": {
+                "en": "NO₂",
+                "fr": "NO₂",
+                "de": "NO₂",
+                "es": "NO₂"
+              }
+            },
+            {
+              "value": "o3",
+              "label": {
+                "en": "Ozone",
+                "fr": "Ozone",
+                "de": "Ozon",
+                "es": "Ozono"
+              }
+            },
+            {
+              "value": "co",
+              "label": {
+                "en": "Carbon monoxide",
+                "fr": "Monoxyde de carbone",
+                "de": "Kohlenmonoxid",
+                "es": "Monóxido de carbono"
+              }
+            }
+          ]
+        }
+      ],
+      "variables": [
+        {
+          "key": "device",
+          "type": "string",
+          "label": {
+            "en": "Device (id in Gladys)",
+            "fr": "Appareil (id dans Gladys)",
+            "de": "Gerät (ID in Gladys)",
+            "es": "Dispositivo (id en Gladys)"
+          }
+        },
+        {
+          "key": "name",
+          "type": "string",
+          "label": {
+            "en": "Device name",
+            "fr": "Nom de l’appareil",
+            "de": "Name des Geräts",
+            "es": "Nombre del dispositivo"
+          }
+        },
+        {
+          "key": "pollutant",
+          "type": "string",
+          "label": {
+            "en": "Pollutant (key)",
+            "fr": "Polluant (clé)",
+            "de": "Schadstoff (Schlüssel)",
+            "es": "Contaminante (clave)"
+          }
+        },
+        {
+          "key": "pollutant_name",
+          "type": "string",
+          "label": {
+            "en": "Pollutant",
+            "fr": "Polluant",
+            "de": "Schadstoff",
+            "es": "Contaminante"
+          }
+        },
+        {
+          "key": "value",
+          "type": "number",
+          "label": {
+            "en": "Value",
+            "fr": "Valeur",
+            "de": "Wert",
+            "es": "Valor"
+          }
+        },
+        {
+          "key": "unit",
+          "type": "string",
+          "label": {
+            "en": "Unit",
+            "fr": "Unité",
+            "de": "Einheit",
+            "es": "Unidad"
+          }
+        },
+        {
+          "key": "limit",
+          "type": "number",
+          "label": {
+            "en": "Reference value",
+            "fr": "Valeur de référence",
+            "de": "Richtwert",
+            "es": "Valor de referencia"
+          }
+        },
+        {
+          "key": "percent",
+          "type": "number",
+          "label": {
+            "en": "Percent of the reference",
+            "fr": "Pourcentage de la référence",
+            "de": "Prozent des Richtwerts",
+            "es": "Porcentaje de la referencia"
+          }
+        }
+      ]
+    },
+    {
+      "key": "connection_changed",
+      "label": {
+        "en": "Kaiterra: device offline or back",
+        "fr": "Kaiterra : appareil hors ligne ou de retour",
+        "de": "Kaiterra: Gerät offline oder zurück",
+        "es": "Kaiterra: dispositivo desconectado o de vuelta"
+      },
+      "description": {
+        "en": "A device sends no new reading for 15 minutes, or starts again.",
+        "fr": "Un appareil n’envoie plus de mesure depuis 15 minutes, ou recommence.",
+        "de": "Ein Gerät sendet 15 Minuten lang keine neue Messung oder wieder eine.",
+        "es": "Un dispositivo no envía nuevas mediciones durante 15 minutos, o vuelve a hacerlo."
+      },
+      "fields": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "Device",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Dispositivo"
+          },
+          "description": {
+            "en": "A Kaiterra device. Leave empty for any device.",
+            "fr": "Un appareil Kaiterra. Laissez vide pour tous les appareils.",
+            "de": "Ein Kaiterra-Gerät. Leer lassen für alle Geräte.",
+            "es": "Un dispositivo Kaiterra. Déjelo vacío para cualquier dispositivo."
+          },
+          "required": false
+        },
+        {
+          "key": "state",
+          "type": "select",
+          "label": {
+            "en": "State",
+            "fr": "État",
+            "de": "Zustand",
+            "es": "Estado"
+          },
+          "description": {
+            "en": "Leave empty for both.",
+            "fr": "Laissez vide pour les deux.",
+            "de": "Leer lassen für beide.",
+            "es": "Déjelo vacío para ambos."
+          },
+          "options": [
+            {
+              "value": "offline",
+              "label": {
+                "en": "Offline",
+                "fr": "Hors ligne",
+                "de": "Offline",
+                "es": "Sin conexión"
+              }
+            },
+            {
+              "value": "online",
+              "label": {
+                "en": "Back online",
+                "fr": "De retour",
+                "de": "Wieder online",
+                "es": "De nuevo conectado"
+              }
+            }
+          ]
+        }
+      ],
+      "variables": [
+        {
+          "key": "device",
+          "type": "string",
+          "label": {
+            "en": "Device (id in Gladys)",
+            "fr": "Appareil (id dans Gladys)",
+            "de": "Gerät (ID in Gladys)",
+            "es": "Dispositivo (id en Gladys)"
+          }
+        },
+        {
+          "key": "name",
+          "type": "string",
+          "label": {
+            "en": "Device name",
+            "fr": "Nom de l’appareil",
+            "de": "Name des Geräts",
+            "es": "Nombre del dispositivo"
+          }
+        },
+        {
+          "key": "state",
+          "type": "string",
+          "label": {
+            "en": "State (offline, online)",
+            "fr": "État (offline, online)",
+            "de": "Zustand (offline, online)",
+            "es": "Estado (offline, online)"
+          }
+        },
+        {
+          "key": "last_seen",
+          "type": "string",
+          "label": {
+            "en": "Time of the last reading",
+            "fr": "Heure de la dernière mesure",
+            "de": "Uhrzeit der letzten Messung",
+            "es": "Hora de la última medición"
+          }
+        },
+        {
+          "key": "minutes",
+          "type": "number",
+          "label": {
+            "en": "Minutes since the last reading",
+            "fr": "Minutes depuis la dernière mesure",
+            "de": "Minuten seit der letzten Messung",
+            "es": "Minutos desde la última medición"
+          }
+        }
+      ]
+    },
+    {
+      "key": "sensor_module_worn",
+      "label": {
+        "en": "Kaiterra: sensor module worn",
+        "fr": "Kaiterra : module de capteur usé",
+        "de": "Kaiterra: Sensormodul verbraucht",
+        "es": "Kaiterra: módulo de sensor desgastado"
+      },
+      "description": {
+        "en": "A sensor module of a Sensedge has less than 10 % of its useful life left.",
+        "fr": "Un module de capteur d’un Sensedge a moins de 10 % de durée de vie restante.",
+        "de": "Ein Sensormodul eines Sensedge hat weniger als 10 % Lebensdauer übrig.",
+        "es": "A un módulo de sensor de un Sensedge le queda menos del 10 % de vida útil."
+      },
+      "fields": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "Device",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Dispositivo"
+          },
+          "description": {
+            "en": "A Kaiterra device. Leave empty for any device.",
+            "fr": "Un appareil Kaiterra. Laissez vide pour tous les appareils.",
+            "de": "Ein Kaiterra-Gerät. Leer lassen für alle Geräte.",
+            "es": "Un dispositivo Kaiterra. Déjelo vacío para cualquier dispositivo."
+          },
+          "required": false
+        }
+      ],
+      "variables": [
+        {
+          "key": "device",
+          "type": "string",
+          "label": {
+            "en": "Device (id in Gladys)",
+            "fr": "Appareil (id dans Gladys)",
+            "de": "Gerät (ID in Gladys)",
+            "es": "Dispositivo (id en Gladys)"
+          }
+        },
+        {
+          "key": "name",
+          "type": "string",
+          "label": {
+            "en": "Device name",
+            "fr": "Nom de l’appareil",
+            "de": "Name des Geräts",
+            "es": "Nombre del dispositivo"
+          }
+        },
+        {
+          "key": "module",
+          "type": "string",
+          "label": {
+            "en": "Module model",
+            "fr": "Modèle du module",
+            "de": "Modulmodell",
+            "es": "Modelo del módulo"
+          }
+        },
+        {
+          "key": "bay",
+          "type": "number",
+          "label": {
+            "en": "Bay (0 left, 1 right)",
+            "fr": "Baie (0 gauche, 1 droite)",
+            "de": "Schacht (0 links, 1 rechts)",
+            "es": "Ranura (0 izquierda, 1 derecha)"
+          }
+        },
+        {
+          "key": "lifetime",
+          "type": "number",
+          "label": {
+            "en": "Life left (%)",
+            "fr": "Durée de vie restante (%)",
+            "de": "Verbleibende Lebensdauer (%)",
+            "es": "Vida útil restante (%)"
+          }
+        }
+      ]
+    }
+  ],
+  "scene_actions": [
+    {
+      "key": "get_air_quality",
+      "timeout_seconds": 30,
+      "label": {
+        "en": "Kaiterra: read the air",
+        "fr": "Kaiterra : lire l’air",
+        "de": "Kaiterra: Luft lesen",
+        "es": "Kaiterra: leer el aire"
+      },
+      "description": {
+        "en": "The last reading of a device and a sentence for a message.",
+        "fr": "La dernière mesure d’un appareil et une phrase pour un message.",
+        "de": "Die letzte Messung eines Geräts und ein Satz für eine Nachricht.",
+        "es": "La última medición de un dispositivo y una frase para un mensaje."
+      },
+      "fields": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "Device",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Dispositivo"
+          },
+          "description": {
+            "en": "A Kaiterra device. Leave empty for the first one.",
+            "fr": "Un appareil Kaiterra. Laissez vide pour le premier.",
+            "de": "Ein Kaiterra-Gerät. Leer lassen für das erste.",
+            "es": "Un dispositivo Kaiterra. Déjelo vacío para el primero."
+          },
+          "required": false
+        }
+      ],
+      "outputs": [
+        {
+          "key": "name",
+          "type": "string",
+          "label": {
+            "en": "Device name",
+            "fr": "Nom de l’appareil",
+            "de": "Name des Geräts",
+            "es": "Nombre del dispositivo"
+          }
+        },
+        {
+          "key": "aqi",
+          "type": "number",
+          "label": {
+            "en": "AQI",
+            "fr": "AQI",
+            "de": "AQI",
+            "es": "AQI"
+          }
+        },
+        {
+          "key": "level",
+          "type": "string",
+          "label": {
+            "en": "Level (key)",
+            "fr": "Niveau (clé)",
+            "de": "Stufe (Schlüssel)",
+            "es": "Nivel (clave)"
+          }
+        },
+        {
+          "key": "level_name",
+          "type": "string",
+          "label": {
+            "en": "Level",
+            "fr": "Niveau",
+            "de": "Stufe",
+            "es": "Nivel"
+          }
+        },
+        {
+          "key": "pm1",
+          "type": "number",
+          "label": {
+            "en": "PM1 (µg/m³)",
+            "fr": "PM1 (µg/m³)",
+            "de": "PM1 (µg/m³)",
+            "es": "PM1 (µg/m³)"
+          }
+        },
+        {
+          "key": "pm25",
+          "type": "number",
+          "label": {
+            "en": "PM2.5 (µg/m³)",
+            "fr": "PM2,5 (µg/m³)",
+            "de": "PM2,5 (µg/m³)",
+            "es": "PM2,5 (µg/m³)"
+          }
+        },
+        {
+          "key": "pm10",
+          "type": "number",
+          "label": {
+            "en": "PM10 (µg/m³)",
+            "fr": "PM10 (µg/m³)",
+            "de": "PM10 (µg/m³)",
+            "es": "PM10 (µg/m³)"
+          }
+        },
+        {
+          "key": "co2",
+          "type": "number",
+          "label": {
+            "en": "CO₂ (ppm)",
+            "fr": "CO₂ (ppm)",
+            "de": "CO₂ (ppm)",
+            "es": "CO₂ (ppm)"
+          }
+        },
+        {
+          "key": "tvoc",
+          "type": "number",
+          "label": {
+            "en": "TVOC (ppb)",
+            "fr": "COVT (ppb)",
+            "de": "TVOC (ppb)",
+            "es": "COVT (ppb)"
+          }
+        },
+        {
+          "key": "temperature",
+          "type": "number",
+          "label": {
+            "en": "Temperature (°C)",
+            "fr": "Température (°C)",
+            "de": "Temperatur (°C)",
+            "es": "Temperatura (°C)"
+          }
+        },
+        {
+          "key": "humidity",
+          "type": "number",
+          "label": {
+            "en": "Humidity (%)",
+            "fr": "Humidité (%)",
+            "de": "Luftfeuchtigkeit (%)",
+            "es": "Humedad (%)"
+          }
+        },
+        {
+          "key": "pressure",
+          "type": "number",
+          "label": {
+            "en": "Pressure (hPa)",
+            "fr": "Pression (hPa)",
+            "de": "Luftdruck (hPa)",
+            "es": "Presión (hPa)"
+          }
+        },
+        {
+          "key": "no2",
+          "type": "number",
+          "label": {
+            "en": "NO₂ (µg/m³)",
+            "fr": "NO₂ (µg/m³)",
+            "de": "NO₂ (µg/m³)",
+            "es": "NO₂ (µg/m³)"
+          }
+        },
+        {
+          "key": "o3",
+          "type": "number",
+          "label": {
+            "en": "Ozone (µg/m³)",
+            "fr": "Ozone (µg/m³)",
+            "de": "Ozon (µg/m³)",
+            "es": "Ozono (µg/m³)"
+          }
+        },
+        {
+          "key": "co",
+          "type": "number",
+          "label": {
+            "en": "Carbon monoxide (ppm)",
+            "fr": "Monoxyde de carbone (ppm)",
+            "de": "Kohlenmonoxid (ppm)",
+            "es": "Monóxido de carbono (ppm)"
+          }
+        },
+        {
+          "key": "measured_at",
+          "type": "string",
+          "label": {
+            "en": "Time of the reading (ISO 8601)",
+            "fr": "Heure de la mesure (ISO 8601)",
+            "de": "Zeitpunkt der Messung (ISO 8601)",
+            "es": "Hora de la medición (ISO 8601)"
+          }
+        },
+        {
+          "key": "connection",
+          "type": "string",
+          "label": {
+            "en": "Connection (online, offline)",
+            "fr": "Connexion (online, offline)",
+            "de": "Verbindung (online, offline)",
+            "es": "Conexión (online, offline)"
+          }
+        },
+        {
+          "key": "summary",
+          "type": "string",
+          "label": {
+            "en": "Summary",
+            "fr": "Résumé",
+            "de": "Zusammenfassung",
+            "es": "Resumen"
+          }
+        }
+      ]
+    }
+  ]
+}

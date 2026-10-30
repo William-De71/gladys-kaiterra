@@ -1,0 +1,18 @@
+Gladys Kaiterra integration
+Copyright 2026 William Deren
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+The measurements come from the Kaiterra devices of the user, through the
+official Kaiterra API (https://dev.kaiterra.com), with the API key of the user.
+Data provided by Kaiterra.
+
+The files under test/fixtures are built after the examples of the Kaiterra API
+documentation (https://dev.kaiterra.com, version 2025-02-26).
+
+The US Air Quality Index is computed with the breakpoints published by the
+US Environmental Protection Agency (Technical Assistance Document for the
+Reporting of Daily Air Quality, PM2.5 revision of February 2024).
+
+This community integration is not affiliated with, endorsed or sponsored by
+Kaiterra.

@@ -1,0 +1,504 @@
+{
+  "devices": {
+    "sensedge": {
+      "external_id": "ext:kaiterra:sensor:94286bad7e49",
+      "should_poll": false,
+      "params": [],
+      "features": [
+        {
+          "external_id": "ext:kaiterra:sensor:94286bad7e49:aqi",
+          "category": "airquality-sensor",
+          "type": "aqi",
+          "unit": "aqi",
+          "min": 0,
+          "max": 500,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:kaiterra:sensor:94286bad7e49:aqi_level",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:kaiterra:sensor:94286bad7e49:pm25",
+          "category": "pm25-sensor",
+          "type": "decimal",
+          "unit": "microgram-per-cubic-meter",
+          "min": 0,
+          "max": 1000,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:kaiterra:sensor:94286bad7e49:pm10",
+          "category": "pm10-sensor",
+          "type": "decimal",
+          "unit": "microgram-per-cubic-meter",
+          "min": 0,
+          "max": 2000,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:kaiterra:sensor:94286bad7e49:co2",
+          "category": "co2-sensor",
+          "type": "integer",
+          "unit": "ppm",
+          "min": 0,
+          "max": 40000,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:kaiterra:sensor:94286bad7e49:tvoc",
+          "category": "voc-sensor",
+          "type": "decimal",
+          "unit": "ppb",
+          "min": 0,
+          "max": 100000,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:kaiterra:sensor:94286bad7e49:temperature",
+          "category": "temperature-sensor",
+          "type": "decimal",
+          "unit": "celsius",
+          "min": -40,
+          "max": 85,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:kaiterra:sensor:94286bad7e49:humidity",
+          "category": "humidity-sensor",
+          "type": "decimal",
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:kaiterra:sensor:94286bad7e49:pressure",
+          "category": "pressure-sensor",
+          "type": "decimal",
+          "unit": "hPa",
+          "min": 300,
+          "max": 1100,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:kaiterra:sensor:94286bad7e49:no2",
+          "category": "no2-sensor",
+          "type": "decimal",
+          "unit": "microgram-per-cubic-meter",
+          "min": 0,
+          "max": 2000,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:kaiterra:sensor:94286bad7e49:o3",
+          "category": "o3-sensor",
+          "type": "decimal",
+          "unit": "microgram-per-cubic-meter",
+          "min": 0,
+          "max": 2000,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:kaiterra:sensor:94286bad7e49:light",
+          "category": "light-sensor",
+          "type": "decimal",
+          "unit": "lux",
+          "min": 0,
+          "max": 200000,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:kaiterra:sensor:94286bad7e49:motion",
+          "category": "motion-sensor",
+          "type": "binary",
+          "min": 0,
+          "max": 1,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:kaiterra:sensor:94286bad7e49:dew_point",
+          "category": "temperature-sensor",
+          "type": "probe",
+          "unit": "celsius",
+          "min": -60,
+          "max": 60,
+          "read_only": true,
+          "has_feedback": false
+        }
+      ]
+    }
+  },
+  "manifest": {
+    "actions": ["read_now", "diagnostic"],
+    "config_schema": [
+      {
+        "key": "intro",
+        "type": "section"
+      },
+      {
+        "key": "api_key",
+        "type": "secret"
+      },
+      {
+        "key": "devices_section",
+        "type": "section"
+      },
+      {
+        "key": "devices",
+        "type": "string"
+      },
+      {
+        "key": "options",
+        "type": "section"
+      },
+      {
+        "key": "co2_limit",
+        "type": "number"
+      },
+      {
+        "key": "tvoc_limit",
+        "type": "number"
+      },
+      {
+        "key": "language",
+        "type": "select"
+      }
+    ],
+    "scene_triggers": [
+      {
+        "key": "air_quality_changed",
+        "fields": [
+          {
+            "key": "device",
+            "options": []
+          },
+          {
+            "key": "level",
+            "options": [
+              "good",
+              "moderate",
+              "unhealthy_sensitive",
+              "unhealthy",
+              "very_unhealthy",
+              "hazardous"
+            ]
+          },
+          {
+            "key": "direction",
+            "options": ["worse", "better"]
+          }
+        ],
+        "variables": [
+          {
+            "key": "device",
+            "type": "string"
+          },
+          {
+            "key": "name",
+            "type": "string"
+          },
+          {
+            "key": "aqi",
+            "type": "number"
+          },
+          {
+            "key": "level",
+            "type": "string"
+          },
+          {
+            "key": "level_name",
+            "type": "string"
+          },
+          {
+            "key": "previous_level",
+            "type": "string"
+          },
+          {
+            "key": "direction",
+            "type": "string"
+          },
+          {
+            "key": "pm25",
+            "type": "number"
+          },
+          {
+            "key": "pm10",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "key": "threshold_exceeded",
+        "fields": [
+          {
+            "key": "device",
+            "options": []
+          },
+          {
+            "key": "pollutant",
+            "options": ["co2", "tvoc", "pm25", "pm10", "no2", "o3", "co"]
+          }
+        ],
+        "variables": [
+          {
+            "key": "device",
+            "type": "string"
+          },
+          {
+            "key": "name",
+            "type": "string"
+          },
+          {
+            "key": "pollutant",
+            "type": "string"
+          },
+          {
+            "key": "pollutant_name",
+            "type": "string"
+          },
+          {
+            "key": "value",
+            "type": "number"
+          },
+          {
+            "key": "unit",
+            "type": "string"
+          },
+          {
+            "key": "limit",
+            "type": "number"
+          },
+          {
+            "key": "percent",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "key": "threshold_cleared",
+        "fields": [
+          {
+            "key": "device",
+            "options": []
+          },
+          {
+            "key": "pollutant",
+            "options": ["co2", "tvoc", "pm25", "pm10", "no2", "o3", "co"]
+          }
+        ],
+        "variables": [
+          {
+            "key": "device",
+            "type": "string"
+          },
+          {
+            "key": "name",
+            "type": "string"
+          },
+          {
+            "key": "pollutant",
+            "type": "string"
+          },
+          {
+            "key": "pollutant_name",
+            "type": "string"
+          },
+          {
+            "key": "value",
+            "type": "number"
+          },
+          {
+            "key": "unit",
+            "type": "string"
+          },
+          {
+            "key": "limit",
+            "type": "number"
+          },
+          {
+            "key": "percent",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "key": "connection_changed",
+        "fields": [
+          {
+            "key": "device",
+            "options": []
+          },
+          {
+            "key": "state",
+            "options": ["offline", "online"]
+          }
+        ],
+        "variables": [
+          {
+            "key": "device",
+            "type": "string"
+          },
+          {
+            "key": "name",
+            "type": "string"
+          },
+          {
+            "key": "state",
+            "type": "string"
+          },
+          {
+            "key": "last_seen",
+            "type": "string"
+          },
+          {
+            "key": "minutes",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "key": "sensor_module_worn",
+        "fields": [
+          {
+            "key": "device",
+            "options": []
+          }
+        ],
+        "variables": [
+          {
+            "key": "device",
+            "type": "string"
+          },
+          {
+            "key": "name",
+            "type": "string"
+          },
+          {
+            "key": "module",
+            "type": "string"
+          },
+          {
+            "key": "bay",
+            "type": "number"
+          },
+          {
+            "key": "lifetime",
+            "type": "number"
+          }
+        ]
+      }
+    ],
+    "scene_actions": [
+      {
+        "key": "get_air_quality",
+        "fields": ["device"],
+        "outputs": [
+          {
+            "key": "name",
+            "type": "string"
+          },
+          {
+            "key": "aqi",
+            "type": "number"
+          },
+          {
+            "key": "level",
+            "type": "string"
+          },
+          {
+            "key": "level_name",
+            "type": "string"
+          },
+          {
+            "key": "pm1",
+            "type": "number"
+          },
+          {
+            "key": "pm25",
+            "type": "number"
+          },
+          {
+            "key": "pm10",
+            "type": "number"
+          },
+          {
+            "key": "co2",
+            "type": "number"
+          },
+          {
+            "key": "tvoc",
+            "type": "number"
+          },
+          {
+            "key": "temperature",
+            "type": "number"
+          },
+          {
+            "key": "humidity",
+            "type": "number"
+          },
+          {
+            "key": "pressure",
+            "type": "number"
+          },
+          {
+            "key": "no2",
+            "type": "number"
+          },
+          {
+            "key": "o3",
+            "type": "number"
+          },
+          {
+            "key": "co",
+            "type": "number"
+          },
+          {
+            "key": "measured_at",
+            "type": "string"
+          },
+          {
+            "key": "connection",
+            "type": "string"
+          },
+          {
+            "key": "summary",
+            "type": "string"
+          }
+        ]
+      }
+    ],
+    "widgets": [
+      {
+        "key": "air_quality",
+        "settings": ["device"],
+        "options": {}
+      },
+      {
+        "key": "history",
+        "settings": ["device", "measure"],
+        "options": {
+          "measure": ["co2", "aqi", "pm25", "pm10", "tvoc", "temperature", "humidity"]
+        }
+      }
+    ]
+  }
+}

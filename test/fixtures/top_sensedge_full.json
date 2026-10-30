@@ -1,0 +1,117 @@
+{
+  "data": [
+    {
+      "param": "rco2",
+      "source": "km103",
+      "units": "ppm",
+      "span": 60,
+      "points": [{ "ts": "2020-06-17T06:40:00Z", "value": 612 }]
+    },
+    {
+      "param": "rpm1c",
+      "source": "km100",
+      "units": "µg/m³",
+      "span": 60,
+      "points": [{ "ts": "2020-06-17T06:40:00Z", "value": 3 }]
+    },
+    {
+      "param": "rpm25c",
+      "source": "km100",
+      "units": "µg/m³",
+      "span": 60,
+      "points": [{ "ts": "2020-06-17T06:40:00Z", "value": 5.2 }]
+    },
+    {
+      "param": "rpm10c",
+      "source": "km100",
+      "units": "µg/m³",
+      "span": 60,
+      "points": [{ "ts": "2020-06-17T06:40:00Z", "value": 8 }]
+    },
+    {
+      "param": "rtvoc",
+      "source": "km102",
+      "units": "ppb",
+      "span": 60,
+      "points": [{ "ts": "2020-06-17T06:40:00Z", "value": 210 }]
+    },
+    {
+      "param": "tvoc",
+      "source": "km102",
+      "units": "ppb",
+      "span": 60,
+      "points": [{ "ts": "2020-06-17T06:40:00Z", "value": 180 }]
+    },
+    {
+      "param": "rtemp",
+      "source": "km102",
+      "units": "F",
+      "span": 60,
+      "points": [{ "ts": "2020-06-17T06:40:00Z", "value": 71.6 }]
+    },
+    {
+      "param": "rhumid",
+      "source": "km102",
+      "units": "%",
+      "span": 60,
+      "points": [{ "ts": "2020-06-17T06:40:00Z", "value": 44.3 }]
+    },
+    {
+      "param": "dew_point",
+      "units": "C",
+      "span": 60,
+      "points": [{ "ts": "2020-06-17T06:40:00Z", "value": 9.1 }]
+    },
+    {
+      "param": "atmospheric_pressure",
+      "units": "Pa",
+      "span": 60,
+      "points": [{ "ts": "2020-06-17T06:40:00Z", "value": 101325 }]
+    },
+    {
+      "param": "no2",
+      "source": "km207",
+      "units": "ppb",
+      "span": 60,
+      "points": [{ "ts": "2020-06-17T06:40:00Z", "value": 10 }]
+    },
+    {
+      "param": "ro3",
+      "source": "km207",
+      "units": "ppb",
+      "span": 60,
+      "points": [{ "ts": "2020-06-17T06:40:00Z", "value": 20 }]
+    },
+    {
+      "param": "co",
+      "source": "km207",
+      "units": "ppm",
+      "span": 60,
+      "points": [{ "ts": "2020-06-17T06:40:00Z", "value": 0.4 }]
+    },
+    {
+      "param": "light_clear",
+      "units": "lx",
+      "span": 60,
+      "points": [{ "ts": "2020-06-17T06:40:00Z", "value": 312.5 }]
+    },
+    {
+      "param": "light_red",
+      "units": "lx",
+      "span": 60,
+      "points": [{ "ts": "2020-06-17T06:40:00Z", "value": 80 }]
+    },
+    {
+      "param": "cct",
+      "units": "K",
+      "span": 60,
+      "points": [{ "ts": "2020-06-17T06:40:00Z", "value": 4100 }]
+    },
+    {
+      "param": "pir",
+      "units": "x",
+      "span": 60,
+      "points": [{ "ts": "2020-06-17T06:39:00Z", "value": 1 }]
+    }
+  ]
+}
