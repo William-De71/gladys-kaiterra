@@ -367,7 +367,7 @@ test('widgets: valid contents for the first device by default, or the chosen one
     for (const language of ['en', 'fr', 'de', 'es']) {
       const answer = await gladys.fake.widgetGet(key, { settings, language });
       const { content } = answer.data;
-      assert.deepEqual(validateWidgetContent(content).errors ?? [], [], key);
+      assert.deepEqual(validateWidgetContent(content), [], key);
     }
   }
   const egg = await gladys.fake.widgetGet(WIDGETS.AIR_QUALITY, { settings: { device: EGG_ID } });

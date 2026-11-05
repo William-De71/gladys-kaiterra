@@ -34,9 +34,9 @@ const limits = limitsOf();
  * @param {string} label - What it is.
  */
 function check(content, label) {
-  const report = validateWidgetContent(content);
-  assert.deepEqual(report.errors ?? [], [], `${label}: ${JSON.stringify(report)}`);
-  assert.deepEqual(report.warnings ?? [], [], `${label}: ${JSON.stringify(report)}`);
+  // validateWidgetContent returns the list of what the core would drop.
+  const problems = validateWidgetContent(content);
+  assert.deepEqual(problems, [], `${label}: ${JSON.stringify(problems)}`);
   const count = (type) => content.components.filter((c) => c.type === type).length;
   assert.ok(content.components.length <= 8, `${label}: ${content.components.length} components`);
   assert.ok(count('value') + count('gauge') <= 6, label);
